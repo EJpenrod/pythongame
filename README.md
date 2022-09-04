@@ -17,3 +17,15 @@ there is a town function to heal, there was going to be a shop and a crafting mi
 
 the town board once past a certain mob will let you loop all previously encountered monsters for the sweet sweet exp--- 
   
+update 9/4/22:
+
+cleaned up various code, removed longer delays on going to town.
+monsters are now created using 2-d arrays and no longer just calling function after function to make the game work.
+monsters now drop gold. 
+mining foundation added to the game. mining currently does nothing
+pick axe foundation added to the game. pickaxe currently does nothing
+removed the run option from fights
+
+future: 
+add a shop to purchase gear
+impliment mining
