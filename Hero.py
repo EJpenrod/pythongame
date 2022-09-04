@@ -1,20 +1,23 @@
 
+from operator import inv
 import random
 import time
 from monsters import monster_class
 
 
 from Ascii import Monktext, Necrotext, Paladintext, Roguetext
+
+
 class inventory():
     gold = 0
-    Bag = []
+    bag = {"pickaxe": 1}
     left_hand = []
     right_hand = []
     chest = []
     head = []
     feet = []
     left_ring = []
-    right_ring= []
+    right_ring = []
     neck = []
     charm_1 = []
     charm_2 = []
@@ -33,6 +36,7 @@ class inventory():
         self.charm_1 = charm_1
         self.charm_2 = charm_2
 
+
 class player(inventory):
 
     Health = 100
@@ -47,7 +51,6 @@ class player(inventory):
     exp = 0
     Level = 0
     maxHealth = 100
-
 
     def __init__(self, Health, Damage, Strength, Speed, Vit, Int, Dex, Name, true_damage, exp, Level, maxHealth):
 
@@ -64,50 +67,57 @@ class player(inventory):
         self.Level = Level
         self.maxHealth = maxHealth
 
-
     def getHealth(self):
         return self.Health
+
     def getDamage(self):
         return self.Damage
+
     def getStrength(self):
         return self.Strength
+
     def getSpeed(self):
         return self.Speed
+
     def getVit(self):
         return self.Vit
+
     def getInt(self):
         return self.Int
+
     def getDex(self):
         return self.Dex
 
     def setHealth(self, newHealth):
         self.Health = newHealth
         return self.Health
+
     def setDamage(self, newDamage):
         self.Damage = newDamage
         return self.Damage
+
     def setStrength(self, newStrength):
         self.strength = newStrength
         return self.strength
+
     def setSpeed(self, newSpeed):
         self.Speed = newSpeed
         return self.Speed
+
     def setVit(self, newVit):
         self.Vit = newVit
         return self.Vit
+
     def setInt(self, newInt):
         self.Int = newInt
         return self.Int
+
     def setDex(self, newDex):
         self.Dex = newDex
         return self.Dex
 
 
-
-
-
 def RandomStatRoll(NewPlayer):
-
 
     roll = input("Press enter to roll for stats: ")
     print("rolling dice...")
@@ -118,7 +128,8 @@ def RandomStatRoll(NewPlayer):
     NewPlayer.Damage += random.randint(5, 10)
     print("Your character has rolled", NewPlayer.Damage, " to total damage. ")
     NewPlayer.Strength += random.randint(5, 10)
-    print("Your character has rolled", NewPlayer.Strength, " to total strength. ")
+    print("Your character has rolled",
+          NewPlayer.Strength, " to total strength. ")
     NewPlayer.Speed += random.randint(5, 10)
     print("Your character has rolled", NewPlayer.Speed, " to total speed. ")
     NewPlayer.Vit += random.randint(5, 10)
@@ -131,7 +142,6 @@ def RandomStatRoll(NewPlayer):
 
 def createClass():
     NewPlayer = player(0, 0, 0, 0, 0, 0, 0, 0, "", 0, 0, 0)
-
 
     print("""
     WELCOME DARING ADVENTURER!!!, I tell ya there be stories of riches!
@@ -149,12 +159,12 @@ def createClass():
     
     """)
     a = input(f"Do you fancy: \n1.)Upstanding citizens. \n2.)Dastardly heroes.\n ")
-    while a != "1" and a!= "2":
+    while a != "1" and a != "2":
         print("Please choose your path. ")
         a = input("Are you more prone to be in: \n1.)The Light? \n2.)The Dark?\n ")
 
     if a == "1":
-        b = input ("How did you find your path?: \n1.)Intensive meditation and fasting, seeking enlightinment from within.\n2.)You path was ordaned from the church, you are on call from up high.\n ")
+        b = input("How did you find your path?: \n1.)Intensive meditation and fasting, seeking enlightinment from within.\n2.)You path was ordaned from the church, you are on call from up high.\n ")
         while b != "1" and b != "2":
             print("please choose your path. ")
             b = input("1.)Intensive meditation and fasting, seeking enlightinment from within.\n2.)Your path was ordaned from the church, you are on call from up high.\n  ")
@@ -188,11 +198,13 @@ def createClass():
             RandomStatRoll(NewPlayer)
 
     elif a == "2":
-        b = input("Are you more heroic reading books or hiding in ill lit alley ways?: \n1.)Dark Arts\n2.)Shadows\n ")
+        b = input(
+            "Are you more heroic reading books or hiding in ill lit alley ways?: \n1.)Dark Arts\n2.)Shadows\n ")
 
         while b != "1" and b != "2":
             print("please choose your class. ")
-            b = input("Have you studied the dark arts or the way of shadows: \n1.)sorcery?\n2.)shadows?\n ")
+            b = input(
+                "Have you studied the dark arts or the way of shadows: \n1.)sorcery?\n2.)shadows?\n ")
 
         if b == "1":
             Necrotext()
@@ -220,7 +232,6 @@ def createClass():
             print("")
             RandomStatRoll(NewPlayer)
 
-
     playerName = input("what is your name?: ")
     print("Welcome", playerName, "Your adventure is about to begin...")
     NewPlayer.real_user_damage = random.randint(1, NewPlayer.Damage)
@@ -228,25 +239,38 @@ def createClass():
                   NewPlayer.Dex, playerName, NewPlayer.real_user_damage, NewPlayer.exp, NewPlayer.Level,
                   NewPlayer.maxHealth)
 
+
+def currency(monsters, character):
+    gold = 0
+    for monster in monsters:
+        gold += monster.gold
+    character.gold = character.gold + gold
+    print("You have obtained $", gold,
+          "Your total amount of $ is:", character.gold)
+    return character.gold
+
+
 def player_level(monsters, character):
     total_exp = 0
-    exp_to_lvl = [20, 30, 45, 68, 101, 152, 228, 342, 513, 769, 1153, 1730, 2595, 3892]
+    exp_to_lvl = [20, 30, 45, 68, 101, 152, 228,
+                  342, 513, 769, 1153, 1730, 2595, 3892]
     for monster in monsters:
         total_exp += monster.exp
     character.exp = character.exp + total_exp
     hero_level = character.exp >= exp_to_lvl[character.Level]
-    print("You have obtained:", total_exp, "Exp. Your total exp is:", character.exp)
+    print("You have obtained:", total_exp,
+          "Exp. Your total exp is:", character.exp)
 
     if hero_level:
         print("Congratulations you have leveled up!")
         character.Level = character.Level + 1
         character.maxHealth = int(character.maxHealth + character.Level + 5)
-        print("You have gained :",character.Level + 5, "Health Points")
-        print("Your new health total is:",character.maxHealth)
+        print("You have gained :", character.Level + 5, "Health Points")
+        print("Your new health total is:", character.maxHealth)
         character.Health = character.maxHealth
         character.Damage = int(character.Damage + character.Level + 3)
-        print("You have gained :",character.Level + 3, "Damage Points")
-        print("Your new Damage total is:",character.Damage)
+        print("You have gained :", character.Level + 3, "Damage Points")
+        print("Your new Damage total is:", character.Damage)
         character.Dex = float(character.Dex + character.Level * 0.005)
         print(f"You are now LvL {character.Level}!")
 
@@ -254,4 +278,4 @@ def player_level(monsters, character):
 
         # something something randranint stats + base stats = new stats then return them
 
-#pprint(vars(character))
+# pprint(vars(character))

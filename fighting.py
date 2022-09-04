@@ -16,22 +16,24 @@ def slime_(monsters, character):
 
         for guyimfighting in monsters:
 
-            if guyimfighting.health > 0:
+            if guyimfighting.hp > 0:
 
                 real_slime_damage = random.randint(1, guyimfighting.damage)
                 character.Health = character.Health - real_slime_damage
                 #classselection.user_hp = classselection.user_hp - real_slime_damage
                 ran_texty()
+
                 user_action = input(
-                    "What would you like to do?\n1.) Attack \n:")
-                if user_action == 'attack' or user_action == '1' or user_action == 'Attack':
+                    "What would you like to do?\n1.) Attack\n:")
+
+                if user_action == "attack" or user_action == "1" or user_action == "Attack":
                     topline()
                     if guyimfighting.Dex - character.Dex <= 0:
-                        print(character.name, "attacks for :",
-                              True_damage + (character.Strength / 2))
+                    print(character.name, "attacks for :",
+                          True_damage + (character.Strength / 2))
 
-                    # Damage calculation
-                    guyimfighting.health = guyimfighting.health - \
+                    #print(F"{classselection.user_type} attacks for : {classselection.real_user_damage}")
+                    guyimfighting.hp = guyimfighting.hp - \
                         (True_damage + character.Strength / 2)
 
                     # this is the monster health line
@@ -41,6 +43,7 @@ def slime_(monsters, character):
                     # this is the user health line
                     print(f"{character.Name} is at :{character.Health}")
                     bottomline()
+                    # this is your loss condition
 
             if character.Health <= 0:
                 loss("")
@@ -54,13 +57,12 @@ def slime_(monsters, character):
             all_monsters_dead = True
 
             for guyimfighting in monsters:
-                if guyimfighting.health > 0:
+                if guyimfighting.hp > 0:
                     all_monsters_dead = False
 
             if all_monsters_dead == True:
                 win("")
                 print(guyimfighting.name, "was felled by:", character.Name, "\n")
-                currency(monsters, character)
                 player_level(monsters, character)
                 gameover = True
                 break
